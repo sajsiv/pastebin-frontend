@@ -23,11 +23,13 @@ export function Main(): JSX.Element {
 
   async function postData(pastedData: pastedData) {
     await axios.post(baseUrl, pastedData);
+    window.location.href = baseUrl;
   }
 
-  // async function deleteData(id: number) {
-  //   await axios.delete(baseUrl + id.toString());
-  // }
+  async function deleteData(id: number) {
+    await axios.delete(baseUrl + id.toString());
+    window.location.href = baseUrl;
+  }
 
   const [input, setInput] = useState("");
 
@@ -42,7 +44,12 @@ export function Main(): JSX.Element {
         Post your paste!
       </button>
       {content.map((x) => (
-        <li key={x.id}>{x.name}</li>
+        <div key={x.id}>
+          <li key={x.id}>{x.name}</li>
+          <button onClick={() => deleteData(x.id)} key={x.id}>
+            Delete
+          </button>
+        </div>
       ))}
     </>
   );
