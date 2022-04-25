@@ -1,8 +1,13 @@
 export interface contentInterface {
-  id: number;
-  name: string;
+  id: number,
+  title: string,
+  data: string,
+  creationDate: Date,
 }
 
 export interface pastedData {
-  name: string;
+  title: string,
+  data: string,
+  creationDate: Date
 }
+
