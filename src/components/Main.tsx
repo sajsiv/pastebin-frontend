@@ -12,6 +12,8 @@ export function Main(): JSX.Element {
 
   const [content, setContent] = useState<contentInterface[]>([]);
 
+  const frontendURL = "https://incredible-kulfi-5ae6a9.netlify.app/";
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(requestUrl);
@@ -23,12 +25,12 @@ export function Main(): JSX.Element {
 
   async function postData(pastedData: pastedData) {
     await axios.post(baseUrl, pastedData);
-    window.location.href = baseUrl;
+    window.location.href = frontendURL;
   }
 
   async function deleteData(id: number) {
     await axios.delete(baseUrl + id.toString());
-    window.location.href = baseUrl;
+    window.location.href = frontendURL;
   }
 
   const [input, setInput] = useState("");
@@ -45,10 +47,12 @@ export function Main(): JSX.Element {
       </button>
       {content.map((x) => (
         <div key={x.id}>
-          <li key={x.id}>{x.name}</li>
-          <button onClick={() => deleteData(x.id)} key={x.id}>
-            Delete
-          </button>
+          <li key={x.id}>
+            {x.name}
+            <button onClick={() => deleteData(x.id)} key={x.id}>
+              Delete
+            </button>
+          </li>
         </div>
       ))}
     </>
