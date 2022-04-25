@@ -12,9 +12,10 @@ export function Main(): JSX.Element {
   const requestUrl = `${baseUrl}`;
 
   const [content, setContent] = useState<contentInterface[]>([]);
-  let frontendURL:string;
-  process.env.NODE_ENV === "production"?frontendURL="https://incredible-kulfi-5ae6a9.netlify.app/":frontendURL="http://localhost:3000/"
-  
+  let frontendURL: string;
+  process.env.NODE_ENV === "production"
+    ? (frontendURL = "https://incredible-kulfi-5ae6a9.netlify.app/")
+    : (frontendURL = "http://localhost:3000/");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,12 +45,12 @@ export function Main(): JSX.Element {
         onChange={(e) => setInputTitle(e.target.value)}
         placeholder="add title"
       ></input>
-      <br/>
+      <br />
       <textarea
         onChange={(e) => setInputData(e.target.value)}
         placeholder="Paste in here!"
       ></textarea>
-      <br/>
+      <br />
       <button
         onClick={() =>
           postData({
@@ -61,21 +62,19 @@ export function Main(): JSX.Element {
       >
         Post your paste!
       </button>
-      {content
-        
-        .map((x) => (
-          <div key={x.id}>
-            <h4>{x.title}</h4>
-            <li key={x.id}>
-              {x.data}
-              
-              <button onClick={() => deleteData(x.id)} key={x.id}>
-                Delete
-              </button>
-              <hr />
-            </li>
-          </div>
-        ))}
+      {content.map((x) => (
+        <div key={x.id}>
+          <h4>{x.title}</h4>
+          <li key={x.id}>
+            {x.data}
+
+            <button onClick={() => deleteData(x.id)} key={x.id}>
+              Delete
+            </button>
+            <hr />
+          </li>
+        </div>
+      ))}
     </>
   );
 }
