@@ -2,6 +2,7 @@ import axios from "axios";
 import { contentInterface, pastedData } from "../utils/contentInterface";
 import { useState } from "react";
 import { useEffect } from "react";
+import sortByDate from "../utils/sortChronologically";
 
 export function Main(): JSX.Element {
   const baseUrl =
@@ -33,28 +34,45 @@ export function Main(): JSX.Element {
     window.location.href = frontendURL;
   }
 
-  const [input, setInput] = useState("");
+  const [inputData, setInputData] = useState("");
+  const [inputTitle, setInputTitle] = useState("");
 
   return (
     <>
       <input
-        type="text"
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Paste in here!"
+        onChange={(e) => setInputTitle(e.target.value)}
+        placeholder="add title"
       ></input>
-      <button onClick={() => postData({ name: input })}>
+      <textarea
+        onChange={(e) => setInputData(e.target.value)}
+        placeholder="Paste in here!"
+      ></textarea>
+      <button
+        onClick={() =>
+          postData({
+            title: inputTitle,
+            data: inputData,
+            creationDate: new Date(Date.now()),
+          })
+        }
+      >
         Post your paste!
       </button>
-      {content.map((x) => (
-        <div key={x.id}>
-          <li key={x.id}>
-            {x.name}
-            <button onClick={() => deleteData(x.id)} key={x.id}>
-              Delete
-            </button>
-          </li>
-        </div>
-      ))}
+      {content
+        .sort((a, b) => sortByDate(a, b))
+        .map((x) => (
+          <div key={x.id}>
+            <li key={x.id}>
+              <h4>{x.title}</h4>
+              <br />
+              {x.data}
+              <hr />
+              <button onClick={() => deleteData(x.id)} key={x.id}>
+                Delete
+              </button>
+            </li>
+          </div>
+        ))}
     </>
   );
 }
