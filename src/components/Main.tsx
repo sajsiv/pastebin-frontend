@@ -2,7 +2,6 @@ import axios from "axios";
 import { contentInterface, pastedData } from "../utils/contentInterface";
 import { useState } from "react";
 import { useEffect } from "react";
-import sortByDate from "../utils/sortChronologically";
 
 export function Main(): JSX.Element {
   const baseUrl =
@@ -17,8 +16,7 @@ export function Main(): JSX.Element {
     ? (frontendURL = "https://incredible-kulfi-5ae6a9.netlify.app/")
     : (frontendURL = "http://localhost:3000/");
 
-
-  // fetching sorted pastes 
+  // fetching sorted pastes
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(requestUrl + "sorted");
@@ -27,6 +25,16 @@ export function Main(): JSX.Element {
     };
     fetchData();
   }, [requestUrl]);
+
+  const [summary, setSummary] = useState<number[]>([]);
+
+  function summaryHandler(id: number) {
+    if (summary.includes(id)) {
+      setSummary(summary.filter((x) => x !== id));
+    } else {
+      setSummary([...summary, id]);
+    }
+  }
 
   async function postData(pastedData: pastedData) {
     await axios.post(baseUrl, pastedData);
@@ -40,6 +48,15 @@ export function Main(): JSX.Element {
 
   const [inputData, setInputData] = useState("");
   const [inputTitle, setInputTitle] = useState("");
+
+  function setSummarisedClass(id: number) {
+    let summarisedClass = "";
+    if (summary.includes(id)) {
+      summarisedClass = "summarisedPaste";
+    } else {
+      summarisedClass = "pasteBox";
+    } return summarisedClass
+  }
 
   return (
     <>
@@ -67,14 +84,17 @@ export function Main(): JSX.Element {
       {content.map((x) => (
         <div key={x.id}>
           <h4>{x.title}</h4>
-          <li key={x.id}>
+          <p
+            key={x.id}
+            className={setSummarisedClass(x.id)}
+            onClick={() => summaryHandler(x.id)}
+          >
             {x.data}
-
             <button onClick={() => deleteData(x.id)} key={x.id}>
               Delete
             </button>
             <hr />
-          </li>
+          </p>
         </div>
       ))}
     </>
