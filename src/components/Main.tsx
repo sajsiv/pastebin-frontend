@@ -84,17 +84,19 @@ export function Main(): JSX.Element {
 
   const [language, setLanguage] = useState("C");
   const [edit, setEdit] = useState<string>("");
-  const [type, setType] = useState<string>("hidden");
   const [editID, setEditID] = useState<number>(-1);
 
   function handleEdit(x: editData) {
-    return (( edit !== ""
-      ? (editData({
-          id: x.id,
-          edit: edit,
-        }), setEditID(-1))
-      :       setEditID(x.id)),   
-      editID >= 0? setEditID(-1) : 0)
+    return (
+      edit !== ""
+        ? (editData({
+            id: x.id,
+            edit: edit,
+          }),
+          setEditID(-1))
+        : setEditID(x.id),
+      editID >= 0 ? setEditID(-1) : 0
+    );
   }
 
   return (
