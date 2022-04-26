@@ -17,11 +17,13 @@ export function Main(): JSX.Element {
     ? (frontendURL = "https://incredible-kulfi-5ae6a9.netlify.app/")
     : (frontendURL = "http://localhost:3000/");
 
+
+  // fetching sorted pastes 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(requestUrl);
+      const response = await fetch(requestUrl + "sorted");
       const jsonBody: contentInterface[] = await response.json();
-      setContent(jsonBody.sort((a, b) => sortByDate(a, b)));
+      setContent(jsonBody);
     };
     fetchData();
   }, [requestUrl]);
