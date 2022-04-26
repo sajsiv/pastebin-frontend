@@ -37,6 +37,10 @@ export function Main(): JSX.Element {
   }
 
   async function postData(pastedData: pastedData) {
+    if (pastedData.data === "") {
+      window.alert("You must include body text");
+      return;
+    }
     await axios.post(baseUrl, pastedData);
     window.location.href = frontendURL;
   }
@@ -67,8 +71,11 @@ export function Main(): JSX.Element {
       ></input>
       <br />
       <textarea
+        autoFocus
         onChange={(e) => setInputData(e.target.value)}
         placeholder="Paste in here!"
+        rows={32}
+        cols={200}
       ></textarea>
       <br />
       <button
@@ -91,11 +98,11 @@ export function Main(): JSX.Element {
             onClick={() => summaryHandler(x.id)}
           >
             {x.data}
-            <button onClick={() => deleteData(x.id)} key={x.id}>
-              Delete
-            </button>
-            <hr />
           </p>
+          <button onClick={() => deleteData(x.id)} key={x.id}>
+            Delete
+          </button>
+          <hr />
         </div>
       ))}
     </>
