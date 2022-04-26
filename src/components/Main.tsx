@@ -55,7 +55,8 @@ export function Main(): JSX.Element {
       summarisedClass = "summarisedPaste";
     } else {
       summarisedClass = "pasteBox";
-    } return summarisedClass
+    }
+    return summarisedClass;
   }
 
   return (
