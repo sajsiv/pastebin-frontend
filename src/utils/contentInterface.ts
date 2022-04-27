@@ -5,6 +5,7 @@ export interface contentInterface {
   creationDate: Date;
   language: string;
   expiryDate: string;
+  
 }
 
 export interface pastedData {
