@@ -23,7 +23,7 @@ export function SinglePaste(): JSX.Element {
     };
 
     fetchData();
-  }, [requestUrl,id]);
+  }, [requestUrl, id]);
 
   return <p>{paste?.data}</p>;
 }
