@@ -163,7 +163,7 @@ export function Main(): JSX.Element {
             placeholder="Input your edit..."
             type={editID === x.id ? "text" : "hidden"}
           ></input>
-          <a href={frontendURL+x.id}>{frontendURL+x.id}</a>
+          <a href={frontendURL + x.id}>{frontendURL + x.id}</a>
           <hr />
         </div>
       ))}

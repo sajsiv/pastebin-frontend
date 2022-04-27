@@ -11,15 +11,12 @@ import {
 } from "react-router-dom";
 function App(): JSX.Element {
   return (
-    
     <Router>
       <>
         <Routes>
-          <Route path="/" element={<Main />}/>
-            
-        
-          <Route path="/:id" element = {<SinglePaste />}  />
-        
+          <Route path="/" element={<Main />} />
+
+          <Route path="/:id" element={<SinglePaste />} />
         </Routes>
       </>
     </Router>
