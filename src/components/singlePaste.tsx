@@ -1,12 +1,7 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { contentInterface } from "../utils/contentInterface";
 import { useParams } from "react-router-dom";
-
-interface Property {
-  id: string;
-}
 
 export function SinglePaste(): JSX.Element {
   const { id } = useParams();
@@ -28,7 +23,7 @@ export function SinglePaste(): JSX.Element {
     };
 
     fetchData();
-  }, [requestUrl]);
+  }, [requestUrl,id]);
 
   return <p>{paste?.data}</p>;
 }

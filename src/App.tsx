@@ -5,9 +5,6 @@ import {
   BrowserRouter as Router,
   Routes, //switch
   Route,
-  Link,
-  useMatch, //useroutematch
-  useParams,
 } from "react-router-dom";
 function App(): JSX.Element {
   return (
