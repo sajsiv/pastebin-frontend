@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import OptionsList from "./optionslist";
 import LanguageFilter from "./languageFilter";
+import checkExpiry from "../utils/checkExpiry";
+import deleteExpired from "./DeleteExpired";
 
 export function Main(): JSX.Element {
   const baseUrl =
@@ -27,8 +29,9 @@ export function Main(): JSX.Element {
     const fetchData = async () => {
       const response = await fetch(requestUrl + "sorted");
       const jsonBody: contentInterface[] = await response.json();
-      setContent(jsonBody);
+      setContent(await deleteExpired(jsonBody, requestUrl));
     };
+
     fetchData();
   }, [requestUrl]);
 
@@ -49,14 +52,16 @@ export function Main(): JSX.Element {
       event === "All" ? jsonBody : jsonBody.filter((x) => x.language === event)
     );
   }
-
+  const currentDate = new Date(Date.now());
   async function postData(pastedData: pastedData) {
     if (pastedData.data === "") {
       window.alert("You must include body text");
-      return;
+    } else if (checkExpiry(pastedData.expiryDate, currentDate)) {
+      window.alert("Please enter a valid expiry date");
+    } else {
+      await axios.post(baseUrl, pastedData);
+      window.location.href = frontendURL;
     }
-    await axios.post(baseUrl, pastedData);
-    window.location.href = frontendURL;
   }
 
   async function editData(editData: editData) {
@@ -85,6 +90,7 @@ export function Main(): JSX.Element {
   const [language, setLanguage] = useState("C");
   const [edit, setEdit] = useState<string>("");
   const [editID, setEditID] = useState<number>(-1);
+  const [expiry, setExpiry] = useState<string>("");
 
   function handleEdit(x: editData) {
     return (
@@ -121,11 +127,13 @@ export function Main(): JSX.Element {
             data: inputData,
             creationDate: new Date(Date.now()),
             language: language,
+            expiryDate: expiry,
           })
         }
       >
         Post your paste!
       </button>
+      <input type="date" onChange={(e) => setExpiry(e.target.value)}></input>
       <select onChange={(e) => setLanguage(e.target.value)}>
         <OptionsList />
       </select>
@@ -137,20 +145,16 @@ export function Main(): JSX.Element {
           <h4>{x.title}</h4>
           <i>Language: {x.language}</i>
           <p
-            key={x.id}
             className={setSummarisedClass(x.id)}
             onClick={() => summaryHandler(x.id)}
           >
             {x.data}
           </p>
-          <button onClick={() => deleteData(x.id)} key={x.id}>
-            Delete
-          </button>
+          <button onClick={() => deleteData(x.id)}>Delete</button>
           <button
             onClick={() => {
               handleEdit({ id: x.id, edit: edit });
             }}
-            key={x.id}
           >
             Edit
           </button>
@@ -158,8 +162,8 @@ export function Main(): JSX.Element {
             onChange={(e) => setEdit(e.target.value)}
             placeholder="Input your edit..."
             type={editID === x.id ? "text" : "hidden"}
-            key={x.id}
           ></input>
+          <a href={frontendURL + x.id}>{frontendURL + x.id}</a>
           <hr />
         </div>
       ))}

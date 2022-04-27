@@ -1,11 +1,22 @@
-// import { greet } from "./utils/greet";
 import { Main } from "./components/Main";
-
+import { SinglePaste } from "./components/singlePaste";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes, //switch
+  Route,
+} from "react-router-dom";
 function App(): JSX.Element {
   return (
-    <>
-      <Main />
-    </>
+    <Router>
+      <>
+        <Routes>
+          <Route path="/" element={<Main />} />
+
+          <Route path="/:id" element={<SinglePaste />} />
+        </Routes>
+      </>
+    </Router>
   );
 }
 
