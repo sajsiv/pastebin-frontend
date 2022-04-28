@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { contentInterface } from "../utils/contentInterface";
 import { useParams } from "react-router-dom";
+import { CommentData } from "./commentData";
 
 export function SinglePaste(): JSX.Element {
   const { id } = useParams();
@@ -25,5 +26,9 @@ export function SinglePaste(): JSX.Element {
     fetchData();
   }, [requestUrl, id]);
 
-  return <p>{paste?.data}</p>;
+  return (<>
+  <h2>Your Paste</h2>
+  <p>{paste?.data}</p>
+  {paste && < CommentData content={paste} />}
+  </>);
 }
