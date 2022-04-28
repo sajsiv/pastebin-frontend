@@ -26,9 +26,11 @@ export function SinglePaste(): JSX.Element {
     fetchData();
   }, [requestUrl, id]);
 
-  return (<>
-  <h2>Your Paste</h2>
-  <p>{paste?.data}</p>
-  {paste && < CommentData content={paste} />}
-  </>);
+  return (
+    <>
+      <h2>Your Paste</h2>
+      <p>{paste?.data}</p>
+      {paste && <CommentData content={paste} />}
+    </>
+  );
 }
