@@ -1,6 +1,6 @@
 import axios from "axios";
-import checkExpiry from "../utils/checkExpiry";
-import { contentInterface } from "../utils/contentInterface";
+import checkExpiry from "./checkExpiry";
+import { contentInterface } from "./contentInterface";
 
 export default async function deleteExpired(
   pasteData: contentInterface[],

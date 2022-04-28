@@ -1,17 +1,18 @@
 import axios from "axios";
-import {
-  contentInterface,
-  editData,
-  pastedData,
-} from "../utils/contentInterface";
+import { contentInterface, pastedData } from "../utils/contentInterface";
 import { useState } from "react";
 import { useEffect } from "react";
 import OptionsList from "./optionslist";
-import LanguageFilter from "./languageFilter";
 import checkExpiry from "../utils/checkExpiry";
-import deleteExpired from "./DeleteExpired";
+import deleteExpired from "../utils/DeleteExpired";
+import NavBar from "./NavBar";
 
 export function Main(): JSX.Element {
+  const [inputData, setInputData] = useState("");
+  const [inputTitle, setInputTitle] = useState("");
+  const [language, setLanguage] = useState("C");
+  const [expiry, setExpiry] = useState<string>("");
+
   const baseUrl =
     process.env.NODE_ENV === "production"
       ? "https://pastebin-abdulsaj.herokuapp.com/"
@@ -31,27 +32,9 @@ export function Main(): JSX.Element {
       const jsonBody: contentInterface[] = await response.json();
       setContent(await deleteExpired(jsonBody, requestUrl));
     };
-
     fetchData();
-  }, [requestUrl]);
+  }, [requestUrl, inputData]);
 
-  const [summary, setSummary] = useState<number[]>([]);
-
-  function summaryHandler(id: number) {
-    if (summary.includes(id)) {
-      setSummary(summary.filter((x) => x !== id));
-    } else {
-      setSummary([...summary, id]);
-    }
-  }
-
-  async function filterAllData(event: string) {
-    const response = await fetch(requestUrl);
-    const jsonBody: contentInterface[] = await response.json();
-    setContent(
-      event === "All" ? jsonBody : jsonBody.filter((x) => x.language === event)
-    );
-  }
   const currentDate = new Date(Date.now());
   async function postData(pastedData: pastedData) {
     if (pastedData.data === "") {
@@ -60,113 +43,49 @@ export function Main(): JSX.Element {
       window.alert("Please enter a valid expiry date");
     } else {
       await axios.post(baseUrl, pastedData);
-      window.location.href = frontendURL;
+      window.location.href = frontendURL + (content[0].id + 1);
     }
-  }
-
-  async function editData(editData: editData) {
-    await axios.put(baseUrl, editData);
-    window.location.href = frontendURL;
-  }
-
-  async function deleteData(id: number) {
-    await axios.delete(baseUrl + id.toString());
-    window.location.href = frontendURL;
-  }
-
-  const [inputData, setInputData] = useState("");
-  const [inputTitle, setInputTitle] = useState("");
-
-  function setSummarisedClass(id: number) {
-    let summarisedClass = "";
-    if (summary.includes(id)) {
-      summarisedClass = "summarisedPaste";
-    } else {
-      summarisedClass = "pasteBox";
-    }
-    return summarisedClass;
-  }
-
-  const [language, setLanguage] = useState("C");
-  const [edit, setEdit] = useState<string>("");
-  const [editID, setEditID] = useState<number>(-1);
-  const [expiry, setExpiry] = useState<string>("");
-
-  function handleEdit(x: editData) {
-    return (
-      edit !== ""
-        ? (editData({
-            id: x.id,
-            edit: edit,
-          }),
-          setEditID(-1))
-        : setEditID(x.id),
-      editID >= 0 ? setEditID(-1) : 0
-    );
   }
 
   return (
     <>
-      <input
-        onChange={(e) => setInputTitle(e.target.value)}
-        placeholder="add title"
-      ></input>
-      <br />
-      <textarea
-        autoFocus
-        onChange={(e) => setInputData(e.target.value)}
-        placeholder="Paste in here!"
-        rows={32}
-        cols={200}
-      ></textarea>
-      <br />
-      <button
-        onClick={() =>
-          postData({
-            title: inputTitle,
-            data: inputData,
-            creationDate: new Date(Date.now()),
-            language: language,
-            expiryDate: expiry,
-          })
-        }
-      >
-        Post your paste!
-      </button>
-      <input type="date" onChange={(e) => setExpiry(e.target.value)}></input>
-      <select onChange={(e) => setLanguage(e.target.value)}>
-        <OptionsList />
-      </select>
-      <select onChange={(e) => filterAllData(e.target.value.toString())}>
-        <LanguageFilter />
-      </select>
-      {content.map((x) => (
-        <div key={x.id}>
-          <h4>{x.title}</h4>
-          <i>Language: {x.language}</i>
-          <p
-            className={setSummarisedClass(x.id)}
-            onClick={() => summaryHandler(x.id)}
-          >
-            {x.data}
-          </p>
-          <button onClick={() => deleteData(x.id)}>Delete</button>
-          <button
-            onClick={() => {
-              handleEdit({ id: x.id, edit: edit });
-            }}
-          >
-            Edit
-          </button>
-          <input
-            onChange={(e) => setEdit(e.target.value)}
-            placeholder="Input your edit..."
-            type={editID === x.id ? "text" : "hidden"}
-          ></input>
-          <a href={frontendURL + x.id}>{frontendURL + x.id}</a>
-          <hr />
-        </div>
-      ))}
+      <NavBar />
+      <div className="mainbox">
+        <input
+          onChange={(e) => setInputTitle(e.target.value)}
+          placeholder="add title"
+          className="titleInput"
+        ></input>
+        <br />
+        <textarea
+          autoFocus
+          onChange={(e) => setInputData(e.target.value)}
+          placeholder="Paste in here!"
+          rows={22}
+          cols={140}
+          className="pasteInput"
+        ></textarea>
+        <br />
+        <button
+          onClick={() =>
+            postData({
+              title: inputTitle,
+              data: inputData,
+              creationDate: new Date(Date.now()),
+              language: language,
+              expiryDate: expiry,
+            })
+          }
+          className="button10"
+        >
+          Post your paste!
+        </button>
+        <input type="date" onChange={(e) => setExpiry(e.target.value)}></input>
+
+        <select onChange={(e) => setLanguage(e.target.value)}>
+          <OptionsList />
+        </select>
+      </div>
     </>
   );
 }
