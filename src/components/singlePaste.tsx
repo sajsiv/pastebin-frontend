@@ -30,7 +30,7 @@ export function SinglePaste(): JSX.Element {
   return (
     <>
       <NavBar />
-      <h2>Your Paste</h2>
+      <h2>{paste?.title}</h2>
       <p>{paste?.data}</p>
       {paste && <CommentData content={paste} />}
     </>

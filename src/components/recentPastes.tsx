@@ -95,7 +95,10 @@ export default function RecentPastes(): JSX.Element {
   return (
     <>
       <NavBar />
-      <select onChange={(e) => filterAllData(e.target.value.toString())}>
+      <select
+        onChange={(e) => filterAllData(e.target.value.toString())}
+        defaultValue="Select Language"
+      >
         <LanguageFilter />
       </select>
       {content.map((x) => (
