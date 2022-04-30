@@ -66,6 +66,21 @@ export function Main(): JSX.Element {
           className="pasteInput"
         ></textarea>
         <br />
+        <div className="inputBoxMain">
+          <h5>Select the language of your paste:</h5>
+          <select
+            className="languageMain"
+            onChange={(e) => setLanguage(e.target.value)}
+          >
+            <OptionsList />
+          </select>
+          <h5>Select an expiry date for your paste:</h5>
+          <input
+            className="dateInput"
+            type="date"
+            onChange={(e) => setExpiry(e.target.value)}
+          ></input>
+        </div>
         <button
           onClick={() =>
             postData({
@@ -80,11 +95,6 @@ export function Main(): JSX.Element {
         >
           Post your paste!
         </button>
-        <input type="date" onChange={(e) => setExpiry(e.target.value)}></input>
-
-        <select onChange={(e) => setLanguage(e.target.value)}>
-          <OptionsList />
-        </select>
       </div>
     </>
   );

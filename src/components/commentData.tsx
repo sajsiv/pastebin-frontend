@@ -21,10 +21,8 @@ export function CommentData(props: Properties): JSX.Element {
     const fetchData = async () => {
       const response = await fetch(requestUrl + props.content.id + "/comments");
       const jsonBody: Comment[] = await response.json();
-
       setComments(jsonBody);
     };
-
     fetchData();
   }, [requestUrl, props.content.id]); //might not work
 
@@ -50,8 +48,12 @@ export function CommentData(props: Properties): JSX.Element {
   return (
     <>
       <h4>Comments</h4>
-      <input onChange={(e) => setPost({ comment: e.target.value })}></input>
+      <input
+        onChange={(e) => setPost({ comment: e.target.value })}
+        className="commentInput"
+      ></input>
       <button
+        className="button10"
         onClick={() =>
           post.comment !== ""
             ? postComment(post)
@@ -63,7 +65,12 @@ export function CommentData(props: Properties): JSX.Element {
       {comments?.map((x) => (
         <li key={x.commentid}>
           {x.comment}{" "}
-          <button onClick={() => deleteComment(x.commentid)}>delete</button>
+          <button
+            onClick={() => deleteComment(x.commentid)}
+            className="button10"
+          >
+            delete
+          </button>
         </li>
       ))}
     </>

@@ -62,23 +62,33 @@ export function SinglePaste(): JSX.Element {
   return (
     <>
       <NavBar />
-      <h2>{paste?.title}</h2>
-      <p>{paste?.data}</p>
-      <button onClick={() => paste && deleteData(paste.id)}>Delete</button>
-      <button
-        onClick={() => {
-          paste && handleEdit({ id: paste.id, edit: edit });
-        }}
-      >
-        Edit
-      </button>
-      <input
-        onChange={(e) => setEdit(e.target.value)}
-        placeholder="Input your edit..."
-        type={editID === paste?.id ? "text" : "hidden"}
-      ></input>
-
-      {paste && <CommentData content={paste} />}
+      <div className="singlePaste">
+        <h2>{paste?.title}</h2>
+        <p>{paste?.data}</p>
+        <div className="singleEditDelete">
+          <button
+            onClick={() => paste && deleteData(paste.id)}
+            className="button10"
+          >
+            Delete
+          </button>
+          <button
+            className="button10"
+            onClick={() => {
+              paste && handleEdit({ id: paste.id, edit: edit });
+            }}
+          >
+            Edit
+          </button>
+          <input
+            onChange={(e) => setEdit(e.target.value)}
+            placeholder="Input your edit..."
+            type={editID === paste?.id ? "text" : "hidden"}
+            className=""
+          ></input>
+        </div>
+        {paste && <CommentData content={paste} />}
+      </div>
     </>
   );
 }
