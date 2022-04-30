@@ -163,3 +163,10 @@
   color: #60666d;
   text-align: center;
 }
+
+.input {
+  width: 100%;
+  height: 50px;
+  column-span: 50;
+  margin-top: 5px;
+}
