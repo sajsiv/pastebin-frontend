@@ -96,36 +96,47 @@ export default function RecentPastes(): JSX.Element {
     <>
       <NavBar />
       <select
+        className="textFormat input title"
         onChange={(e) => filterAllData(e.target.value.toString())}
         defaultValue="Select Language"
       >
         <LanguageFilter />
       </select>
+
       {content.map((x) => (
-        <div key={x.id}>
-          <h4>{x.title}</h4>
+        <div key={x.id} className="pasteElement textFormat">
+          <h3 className="title">{x.title}</h3>
           <i>Language: {x.language}</i>
+          <br />
+          <i>Paste URL: </i>
+          <a href={frontendURL + x.id}>
+            <i>{frontendURL + x.id}</i>
+          </a>
           <p
             className={setSummarisedClass(x.id)}
             onClick={() => summaryHandler(x.id)}
           >
             {x.data}
           </p>
-          <button onClick={() => deleteData(x.id)}>Delete</button>
+          <button className="button-9" onClick={() => deleteData(x.id)}>
+            Delete
+          </button>
           <button
+            className="button-9"
             onClick={() => {
               handleEdit({ id: x.id, edit: edit });
             }}
           >
             Edit
           </button>
+
           <input
+            className="pasteInput input"
             onChange={(e) => setEdit(e.target.value)}
             placeholder="Input your edit..."
             type={editID === x.id ? "text" : "hidden"}
           ></input>
-          <a href={frontendURL + x.id}>{frontendURL + x.id}</a>
-          <hr />
+          <br />
         </div>
       ))}
     </>

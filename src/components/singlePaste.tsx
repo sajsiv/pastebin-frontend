@@ -7,7 +7,6 @@ import NavBar from "./NavBar";
 import { editData } from "../utils/contentInterface";
 import axios from "axios";
 
-
 export function SinglePaste(): JSX.Element {
   const { id } = useParams();
   console.log(id);
@@ -66,18 +65,18 @@ export function SinglePaste(): JSX.Element {
       <h2>{paste?.title}</h2>
       <p>{paste?.data}</p>
       <button onClick={() => paste && deleteData(paste.id)}>Delete</button>
-          <button
-            onClick={() => {
-              paste && handleEdit({ id: paste.id, edit: edit });
-            }}
-          >
-            Edit
-          </button>
-          <input
-            onChange={(e) => setEdit(e.target.value)}
-            placeholder="Input your edit..."
-            type={editID === paste?.id ? "text" : "hidden"}
-          ></input>
+      <button
+        onClick={() => {
+          paste && handleEdit({ id: paste.id, edit: edit });
+        }}
+      >
+        Edit
+      </button>
+      <input
+        onChange={(e) => setEdit(e.target.value)}
+        placeholder="Input your edit..."
+        type={editID === paste?.id ? "text" : "hidden"}
+      ></input>
 
       {paste && <CommentData content={paste} />}
     </>
