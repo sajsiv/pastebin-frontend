@@ -1,5 +1,10 @@
-# Simplified CRA starter
+# Pastebin Project
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
-
-> This is part of Academy's technical curriculum for **The Mark**. All parts of that curriculum, including this project, are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>
+Deployed Front-end: https://incredible-kulfi-5ae6a9.netlify.app/  
+Deployed Back-end: https://pastebin-abdulsaj.herokuapp.com/  
+Architecture diagram: https://whimsical.com/pastebin-9FZguAJzaMGjtC6HUPuYLa  
+Project Board - FE: https://github.com/sajsiv/pastebin-frontend/projects/1?add_cards_query=is%3Aopen  
+Repo (Back-end): https://github.com/arshaikhh/pastebin-team   
+Repo (Front-end): https://github.com/sajsiv/pastebin-frontend   
+UI Wireframe: https://whimsical.com/QQzNe9PoXTVdFaKySwChUv    
+Team: Abdul Rehman Shaikh, Sajjan Sivia  

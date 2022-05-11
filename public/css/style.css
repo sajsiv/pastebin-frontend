@@ -1,0 +1,43 @@
+.pasteBox{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+.summarisedPaste{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;}
+
+    .pasteElement {
+        /* background-color: rgb(199, 235, 199);
+        background-position: center; */
+        display:block;
+        box-shadow: 0 4px 8px 0 rgb(127, 202, 202);;
+        width:auto;
+        height:auto;
+        justify-content: center;
+        background-color: rgb(127, 202, 202);
+        margin-left: 200px;
+        margin-right: 200px;
+        margin-top:30px;
+        margin-bottom:30px;
+        padding:30px;
+        border-radius: 25px;
+        
+    }
+
+    .textFormat {
+        font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue",
+        Ubuntu, sans-serif;
+        font-size: 100%;
+        text-align: center left;
+        
+    }
+
+    .title {
+        text-align: center
+    }
